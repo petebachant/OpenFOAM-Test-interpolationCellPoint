@@ -6,13 +6,8 @@
     label inflowCellI = mesh.findCell(inflowVelocityPoint);
     if (inflowCellI != -1)
     {
-        Sout<< "\nProcessor " << Pstream::myProcNo() << " contains cell"
-            << endl << endl;
-            
-        interpolationCellPoint<vector> UInterp(U);
-        
-        Sout<< "Processor " << Pstream::myProcNo() 
-            << " created interpolation" << endl << endl;
+        Sout<< "\nProcessor " << Pstream::myProcNo() << " contains cell "
+            << inflowCellI << endl << endl;
         
         inflowVelocity = UInterp.interpolate
         (

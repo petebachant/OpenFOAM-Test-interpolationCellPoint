@@ -48,6 +48,8 @@ int main(int argc, char *argv[])
     #include "initContinuityErrs.H"
 
     simpleControl simple(mesh);
+    
+    interpolationCellPoint<vector> UInterp(U);
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
