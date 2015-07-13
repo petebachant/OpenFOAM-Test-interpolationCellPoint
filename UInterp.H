@@ -6,17 +6,32 @@
     label inflowCellI = mesh.findCell(inflowVelocityPoint);
     if (inflowCellI != -1)
     {
-        //~ interpolationCellPoint<vector> UInterp(Uin);
-        autoPtr<interpolation<vector> > UInterp = 
-            interpolation<vector>::New("cellPoint", U);
-        inflowVelocity = UInterp->interpolate
+        Sout<< "\nProcessor " << Pstream::myProcNo() << " contains cell"
+            << endl << endl;
+            
+        interpolationCellPoint<vector> UInterp(U);
+        
+        Sout<< "Processor " << Pstream::myProcNo() 
+            << " created interpolation" << endl << endl;
+        
+        inflowVelocity = UInterp.interpolate
         (
             inflowVelocityPoint, 
             inflowCellI
         );
+        
+        Sout<< "inflowVelocity: " << inflowVelocity << endl << endl;
+    }
+    else
+    {
+        Sout<< "Processor " << Pstream::myProcNo() 
+            << " does not contain cell" << endl << endl;
     }
     
-    // Pick minimum value from from all processors
-    reduce(inflowVelocity, minOp<vector>());
-    
-    Info<< "\ninflowVelocity: " << inflowVelocity << endl << endl;
+    if (false)
+    {
+        // Pick minimum value from from all processors
+        reduce(inflowVelocity, minOp<vector>());
+        
+        Info<< "inflowVelocity: " << inflowVelocity << endl << endl;
+    }
